@@ -4,19 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | AI quant experiments</title>
+<title>fastai ULMFit approach performance versus standard NLP Pytorch model | AI quant experiments</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="fastai ULMFit approach performance versus standard NLP Pytorch model" />
+<meta name="author" content="Sylvain Thibault" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="My journey applying AI to quant trading." />
-<meta property="og:description" content="My journey applying AI to quant trading." />
-<link rel="canonical" href="https://sylvaint.github.io/aimusing/2020/10/19/fastai_ulmfit_vs_pytorch_stocktwits.html" />
-<meta property="og:url" content="https://sylvaint.github.io/aimusing/2020/10/19/fastai_ulmfit_vs_pytorch_stocktwits.html" />
+<meta name="description" content="Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis." />
+<meta property="og:description" content="Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis." />
+<link rel="canonical" href="https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
+<meta property="og:url" content="https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
 <meta property="og:site_name" content="AI quant experiments" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-10-19T00:00:00-05:00" />
+<meta property="article:published_time" content="2020-10-20T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"My journey applying AI to quant trading.","url":"https://sylvaint.github.io/aimusing/2020/10/19/fastai_ulmfit_vs_pytorch_stocktwits.html","@type":"BlogPosting","headline":"Title","dateModified":"2020-10-19T00:00:00-05:00","datePublished":"2020-10-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.github.io/aimusing/2020/10/19/fastai_ulmfit_vs_pytorch_stocktwits.html"},"@context":"https://schema.org"}</script>
+{"description":"Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.","url":"https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html","@type":"BlogPosting","headline":"fastai ULMFit approach performance versus standard NLP Pytorch model","dateModified":"2020-10-20T00:00:00-05:00","datePublished":"2020-10-20T00:00:00-05:00","author":{"@type":"Person","name":"Sylvain Thibault"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/aimusing/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sylvaint.github.io/aimusing/feed.xml" title="AI quant experiments" /><link rel="shortcut icon" type="image/x-icon" href="/aimusing/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,9 +72,11 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-19T00:00:00-05:00" itemprop="datePublished">
-        Oct 19, 2020
-      </time>
+    <h1 class="post-title p-name" itemprop="name headline">fastai ULMFit approach performance versus standard NLP Pytorch model</h1><p class="page-description">Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-20T00:00:00-05:00" itemprop="datePublished">
+        Oct 20, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Sylvain Thibault</span></span>
        • <span class="read-time" title="Estimated read time">
     
     
@@ -82,25 +85,35 @@ window.onload = wrap_img;
 </span></p>
 
     
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/aimusing/categories/#AI for trading">AI for trading</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/aimusing/categories/#ULMFit">ULMFit</a>
+        
+      
+      </p>
+    
 
     
       
         <div class="pb-5 d-flex flex-wrap flex-justify-end">
           <div class="px-2">
 
-    <a href="https://github.com/sylvaint/aimusing/tree/master/_notebooks/fastai_ulmfit_vs_pytorch_stocktwits.ipynb" role="button" target="_blank">
+    <a href="https://github.com/sylvaint/aimusing/tree/master/_notebooks/2020-10-20-fastai_ulmfit_vs_pytorch_stocktwits.ipynb" role="button" target="_blank">
 <img class="notebook-badge-image" src="/aimusing/assets/badges/github.svg" alt="View On GitHub">
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://mybinder.org/v2/gh/sylvaint/aimusing/master?filepath=_notebooks%2Ffastai_ulmfit_vs_pytorch_stocktwits.ipynb" target="_blank">
+    <a href="https://mybinder.org/v2/gh/sylvaint/aimusing/master?filepath=_notebooks%2F2020-10-20-fastai_ulmfit_vs_pytorch_stocktwits.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/aimusing/assets/badges/binder.svg" alt="Open In Binder"/>
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://colab.research.google.com/github/sylvaint/aimusing/blob/master/_notebooks/fastai_ulmfit_vs_pytorch_stocktwits.ipynb" target="_blank">
+    <a href="https://colab.research.google.com/github/sylvaint/aimusing/blob/master/_notebooks/2020-10-20-fastai_ulmfit_vs_pytorch_stocktwits.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/aimusing/assets/badges/colab.svg" alt="Open In Colab"/>
     </a>
 </div>
@@ -108,25 +121,66 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Introduction">Introduction </a></li>
+<li class="toc-entry toc-h2"><a href="#Import-Twits">Import Twits </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Load-Twits-Data">Load Twits Data </a></li>
+<li class="toc-entry toc-h3"><a href="#Length-of-data">Length of data </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Preprocessing-the-Data">Preprocessing the Data </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Preprocess-All-the-Twits">Preprocess All the Twits </a></li>
+<li class="toc-entry toc-h3"><a href="#Bag-of-Words">Bag of Words </a></li>
+<li class="toc-entry toc-h3"><a href="#Frequency-of-Words-Appearing-in-Message">Frequency of Words Appearing in Message </a></li>
+<li class="toc-entry toc-h3"><a href="#Remove-Filtered-Words-from-Vocabulary">Remove Filtered Words from Vocabulary </a></li>
+<li class="toc-entry toc-h3"><a href="#Balancing-the-classes">Balancing the classes </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Neural-Network">Neural Network </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Embed-->-RNN-->-Dense-->-Softmax">Embed -&gt; RNN -&gt; Dense -&gt; Softmax </a></li>
+<li class="toc-entry toc-h3"><a href="#View-Model">View Model </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Training">Training </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#DataLoaders-and-Batching">DataLoaders and Batching </a></li>
+<li class="toc-entry toc-h3"><a href="#Training-and--Validation">Training and  Validation </a></li>
+<li class="toc-entry toc-h3"><a href="#Train-model">Train model </a></li>
+<li class="toc-entry toc-h3"><a href="#ULMFit-approach">ULMFit approach </a></li>
+</ul>
+</li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/fastai_ulmfit_vs_pytorch_stocktwits.ipynb
+# file to edit: _notebooks/2020-10-20-fastai_ulmfit_vs_pytorch_stocktwits.ipynb
 -->
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction"> </a></h2><p>In this project we will be comparing the results from a sentiment analysis model using a RNN implemented directly in PyTorch with another using the Fastai library with the ULMFit (Universal Language Model Fine-tuning) approach from this <a href="https://arxiv.org/abs/1801.06146">paper</a>.</p>
+<h2 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+</h2>
+<p>In this project we will be comparing the results from a sentiment analysis model using a RNN implemented directly in PyTorch with another using the Fastai library with the ULMFit (Universal Language Model Fine-tuning) approach from this <a href="https://arxiv.org/abs/1801.06146">paper</a>.</p>
 <p>The ULMFit approach involves using a language model first and then train it with the new vocabulary from the new application.  Once our language model has been trained with the added new data, we use it as the base from our classification problem.  A language model is a model that has been trained to guess the next word coming in a text from having seen the words that came before.  This kind of process is called <em>self supervized learning</em>.  In this case, no labels are provided to our model.</p>
 <p>Lets move onto the actual classification problem we are going to solve.</p>
 <p>When deciding the value of a company, it's important to follow the news. For example, a product recall or natural disaster in a company's product chain. You want to be able to turn this information into a signal.</p>
 <p>We will be using posts from the social media site <a href="https://en.wikipedia.org/wiki/StockTwits">StockTwits</a>. The community on StockTwits is full of investors, traders, and entrepreneurs. Each message posted is called a Twit. This is similar to Twitter's version of a post, called a Tweet. We will build a model around these twits that generate a sentiment score.</p>
 <p>The data is a large collection of messages that where hand labeled with the sentiment of each.  The degree of sentiment is a five-point scale: very negative, negative, neutral, positive, very positive. Each twit is labeled -2 to 2 in steps of 1, from very negative to very positive respectively.</p>
 <p>The first thing we should to do, is load the data.</p>
-<h2 id="Import-Twits">Import Twits<a class="anchor-link" href="#Import-Twits"> </a></h2><h3 id="Load-Twits-Data">Load Twits Data<a class="anchor-link" href="#Load-Twits-Data"> </a></h3><p>This JSON file contains a list of objects for each twit in the <code>'data'</code> field:</p>
+<h2 id="Import-Twits">
+<a class="anchor" href="#Import-Twits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Import Twits<a class="anchor-link" href="#Import-Twits"> </a>
+</h2>
+<h3 id="Load-Twits-Data">
+<a class="anchor" href="#Load-Twits-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Load Twits Data<a class="anchor-link" href="#Load-Twits-Data"> </a>
+</h3>
+<p>This JSON file contains a list of objects for each twit in the <code>'data'</code> field:</p>
 
 <pre><code>{'data':
   {'message_body': 'Neutral twit body text here',
@@ -137,8 +191,10 @@ window.onload = wrap_img;
 }</code></pre>
 <p>The fields represent the following:</p>
 <ul>
-<li><code>'message_body'</code>: The text of the twit.</li>
-<li><code>'sentiment'</code>: Sentiment score for the twit, ranges from -2 to 2 in steps of 1, with 0 being neutral.</li>
+<li>
+<code>'message_body'</code>: The text of the twit.</li>
+<li>
+<code>'sentiment'</code>: Sentiment score for the twit, ranges from -2 to 2 in steps of 1, with 0 being neutral.</li>
 </ul>
 <p>To see what the data look like by printing the first 10 twits from the list.</p>
 
@@ -169,7 +225,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;stocktwits_sentiment&#39;</span><span class="p">,</span> <span class="s1">&#39;twits.json&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'stocktwits_sentiment'</span><span class="p">,</span> <span class="s1">'twits.json'</span><span class="p">),</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">twits</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 
@@ -180,9 +236,13 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Length-of-data">Length of data<a class="anchor-link" href="#Length-of-data"> </a></h3><p>Lets look at the length of our data:</p>
+<h3 id="Length-of-data">
+<a class="anchor" href="#Length-of-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Length of data<a class="anchor-link" href="#Length-of-data"> </a>
+</h3>
+<p>Lets look at the length of our data:</p>
 
 </div>
 </div>
@@ -194,7 +254,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">twits</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">twits</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]))</span>
 </pre></div>
 
     </div>
@@ -218,7 +278,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And a couple of messages</p>
 
@@ -232,7 +293,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">twits</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][:</span><span class="mi">5</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">twits</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][:</span><span class="mi">5</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -245,7 +306,7 @@ window.onload = wrap_img;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[{&#39;message_body&#39;: &#39;$FITB great buy at 26.00...ill wait&#39;, &#39;sentiment&#39;: 2, &#39;timestamp&#39;: &#39;2018-07-01T00:00:09Z&#39;}, {&#39;message_body&#39;: &#39;@StockTwits $MSFT&#39;, &#39;sentiment&#39;: 1, &#39;timestamp&#39;: &#39;2018-07-01T00:00:42Z&#39;}, {&#39;message_body&#39;: &#39;#STAAnalystAlert for $TDG : Jefferies Maintains with a rating of Hold setting target price at USD 350.00. Our own verdict is Buy  http://www.stocktargetadvisor.com/toprating&#39;, &#39;sentiment&#39;: 2, &#39;timestamp&#39;: &#39;2018-07-01T00:01:24Z&#39;}, {&#39;message_body&#39;: &#39;$AMD I heard there’s a guy who knows someone who thinks somebody knows something - on StockTwits.&#39;, &#39;sentiment&#39;: 1, &#39;timestamp&#39;: &#39;2018-07-01T00:01:47Z&#39;}, {&#39;message_body&#39;: &#39;$AMD reveal yourself!&#39;, &#39;sentiment&#39;: 0, &#39;timestamp&#39;: &#39;2018-07-01T00:02:13Z&#39;}]
+<pre>[{'message_body': '$FITB great buy at 26.00...ill wait', 'sentiment': 2, 'timestamp': '2018-07-01T00:00:09Z'}, {'message_body': '@StockTwits $MSFT', 'sentiment': 1, 'timestamp': '2018-07-01T00:00:42Z'}, {'message_body': '#STAAnalystAlert for $TDG : Jefferies Maintains with a rating of Hold setting target price at USD 350.00. Our own verdict is Buy  http://www.stocktargetadvisor.com/toprating', 'sentiment': 2, 'timestamp': '2018-07-01T00:01:24Z'}, {'message_body': '$AMD I heard there’s a guy who knows someone who thinks somebody knows something - on StockTwits.', 'sentiment': 1, 'timestamp': '2018-07-01T00:01:47Z'}, {'message_body': '$AMD reveal yourself!', 'sentiment': 0, 'timestamp': '2018-07-01T00:02:13Z'}]
 </pre>
 </div>
 </div>
@@ -256,7 +317,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Lets split the messages and the labels</p>
 
@@ -270,9 +332,9 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">&#39;message_body&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]]</span>
-<span class="c1"># Since the sentiment scores are discrete, we&#39;ll scale the sentiments to 0 to 4 for use in our network</span>
-<span class="n">sentiments</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">'message_body'</span><span class="p">]</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]]</span>
+<span class="c1"># Since the sentiment scores are discrete, we'll scale the sentiments to 0 to 4 for use in our network</span>
+<span class="n">sentiments</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">'sentiment'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]]</span>
 </pre></div>
 
     </div>
@@ -304,7 +366,7 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;$NFLX just noticed they have the last jedi on stream. Love this stock&#39;, 2)</pre>
+<pre>('$NFLX just noticed they have the last jedi on stream. Love this stock', 2)</pre>
 </div>
 
 </div>
@@ -315,9 +377,13 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Preprocessing-the-Data">Preprocessing the Data<a class="anchor-link" href="#Preprocessing-the-Data"> </a></h2><p>With our data in hand we need to preprocess our text. These twits are collected by filtering on ticker symbols where these are denoted with a leader $ symbol in the twit itself. For example,</p>
+<h2 id="Preprocessing-the-Data">
+<a class="anchor" href="#Preprocessing-the-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocessing the Data<a class="anchor-link" href="#Preprocessing-the-Data"> </a>
+</h2>
+<p>With our data in hand we need to preprocess our text. These twits are collected by filtering on ticker symbols where these are denoted with a leader $ symbol in the twit itself. For example,</p>
 <p><code>{'message_body': 'RT @google Our annual look at the year in Google blogging (and beyond) http://t.co/sptHOAh8 $GOOG',
  'sentiment': 0}</code></p>
 <p>The ticker symbols don't provide information on the sentiment, and they are in every twit, so we should remove them. This twit also has the <code>@google</code> username, again not providing sentiment information, so we should also remove it. We also see a URL <code>http://t.co/sptHOAh8</code>. Let's remove these too.</p>
@@ -357,10 +423,10 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;wordnet&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'wordnet'</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">preprocess_1</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    This function takes a string as input, then performs these operations: </span>
 <span class="sd">        - lowercase</span>
 <span class="sd">        - remove URLs</span>
@@ -376,21 +442,21 @@ window.onload = wrap_img;
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">        tokens: The preprocessed text into tokens.</span>
-<span class="sd">    &quot;&quot;&quot;</span> 
+<span class="sd">    """</span> 
     <span class="c1"># Lowercase the twit message</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     
     <span class="c1"># Replace URLs with a space in the message</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;https?://[^\s]+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'https?://[^\s]+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># Replace ticker symbols with a space. The ticker symbols are any stock symbol that starts with $.</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\$[a-z]*\b&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\$[a-z]*\b'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># Replace StockTwits usernames with a space. The usernames are any word that starts with @.</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;@\w*\b&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'@\w*\b'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># Replace everything not a letter with a space</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^a-z]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[^a-z]'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># Tokenize by splitting the string on whitespace into a list of words</span>
     <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -424,9 +490,12 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Preprocess-All-the-Twits">Preprocess All the Twits<a class="anchor-link" href="#Preprocess-All-the-Twits"> </a></h3>
+<h3 id="Preprocess-All-the-Twits">
+<a class="anchor" href="#Preprocess-All-the-Twits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preprocess All the Twits<a class="anchor-link" href="#Preprocess-All-the-Twits"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -469,8 +538,8 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>([[&#39;great&#39;, &#39;buy&#39;, &#39;at&#39;, &#39;ill&#39;, &#39;wait&#39;]],
- [&#39;$FITB great buy at 26.00...ill wait&#39;])</pre>
+<pre>([['great', 'buy', 'at', 'ill', 'wait']],
+ ['$FITB great buy at 26.00...ill wait'])</pre>
 </div>
 
 </div>
@@ -481,14 +550,16 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Looking good</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Lets check for empty tokens</p>
 
@@ -528,7 +599,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Clean that up</p>
 
@@ -554,9 +626,13 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Bag-of-Words">Bag of Words<a class="anchor-link" href="#Bag-of-Words"> </a></h3><p>Now with all of our messages tokenized, we want to create a vocabulary and count up how often each word appears in our entire corpus.</p>
+<h3 id="Bag-of-Words">
+<a class="anchor" href="#Bag-of-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bag of Words<a class="anchor-link" href="#Bag-of-Words"> </a>
+</h3>
+<p>Now with all of our messages tokenized, we want to create a vocabulary and count up how often each word appears in our entire corpus.</p>
 
 </div>
 </div>
@@ -569,9 +645,9 @@ window.onload = wrap_img;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Create a vocabulary by using Bag of words</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="n">stacked_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">tokenized</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">twit</span><span class="p">]</span>
 
 <span class="n">bow</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">stacked_tokens</span><span class="p">)</span>
@@ -586,9 +662,13 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Frequency-of-Words-Appearing-in-Message">Frequency of Words Appearing in Message<a class="anchor-link" href="#Frequency-of-Words-Appearing-in-Message"> </a></h3><p>With our vocabulary parsed, lets remove some of the most common words such as 'the', 'and', 'it', etc. These words don't contribute to identifying sentiment and are really common, resulting in a lot of noise in our input. If we can filter these out, then our network should have an easier time learning.</p>
+<h3 id="Frequency-of-Words-Appearing-in-Message">
+<a class="anchor" href="#Frequency-of-Words-Appearing-in-Message" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frequency of Words Appearing in Message<a class="anchor-link" href="#Frequency-of-Words-Appearing-in-Message"> </a>
+</h3>
+<p>With our vocabulary parsed, lets remove some of the most common words such as 'the', 'and', 'it', etc. These words don't contribute to identifying sentiment and are really common, resulting in a lot of noise in our input. If we can filter these out, then our network should have an easier time learning.</p>
 <p>We also want to remove really rare words that show up only in a few twits. Here you'll want to divide the count of each word by the number of messages. Then remove words that only appear in some small fraction of the messages.</p>
 
 </div>
@@ -631,7 +711,7 @@ window.onload = wrap_img;
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;the&#39;, &#39;to&#39;, &#39;is&#39;, &#39;for&#39;, &#39;on&#39;, &#39;of&#39;, &#39;and&#39;, &#39;in&#39;, &#39;this&#39;, &#39;it&#39;, &#39;at&#39;, &#39;will&#39;, &#39;up&#39;, &#39;are&#39;, &#39;you&#39;]
+<pre>['the', 'to', 'is', 'for', 'on', 'of', 'and', 'in', 'this', 'it', 'at', 'will', 'up', 'are', 'you']
 </pre>
 </div>
 </div>
@@ -652,9 +732,12 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Remove-Filtered-Words-from-Vocabulary">Remove Filtered Words from Vocabulary<a class="anchor-link" href="#Remove-Filtered-Words-from-Vocabulary"> </a></h3>
+<h3 id="Remove-Filtered-Words-from-Vocabulary">
+<a class="anchor" href="#Remove-Filtered-Words-from-Vocabulary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Remove Filtered Words from Vocabulary<a class="anchor-link" href="#Remove-Filtered-Words-from-Vocabulary"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -698,9 +781,13 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Balancing-the-classes">Balancing the classes<a class="anchor-link" href="#Balancing-the-classes"> </a></h3><p>If we look at how our twits are labeled, we'll find that 50% of them are neutral. This means that our network will be 45% accurate just by guessing 0 every single time. To help our network learn appropriately, we'll want to balance our classes.
+<h3 id="Balancing-the-classes">
+<a class="anchor" href="#Balancing-the-classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Balancing the classes<a class="anchor-link" href="#Balancing-the-classes"> </a>
+</h3>
+<p>If we look at how our twits are labeled, we'll find that 50% of them are neutral. This means that our network will be 45% accurate just by guessing 0 every single time. To help our network learn appropriately, we'll want to balance our classes.
 That is, make sure each of our different sentiment scores show up roughly as frequently in the data.</p>
 <p>What we can do here is go through each of our examples and randomly drop twits with neutral sentiment.  We want to get around 20% neutral twits starting from 50% neutral.</p>
 
@@ -715,7 +802,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">sentiments</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">sentiments</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">sentiments</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">sentiments</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -750,18 +837,18 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">balanced</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;sentiments&#39;</span><span class="p">:[]}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">balanced</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'messages'</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">'sentiments'</span><span class="p">:[]}</span>
 
 <span class="n">n_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">sentiments</span> <span class="k">if</span> <span class="n">each</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">N_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentiments</span><span class="p">)</span>
 <span class="n">keep_prob</span> <span class="o">=</span> <span class="p">(</span><span class="n">N_examples</span> <span class="o">-</span> <span class="n">n_neutral</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">n_neutral</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;keep_prob: </span><span class="si">{</span><span class="n">keep_prob</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'keep_prob: </span><span class="si">{</span><span class="n">keep_prob</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sentiment</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sentiments</span><span class="p">):</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">filtered</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">sentiment</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">keep_prob</span><span class="p">:</span>
-        <span class="n">balanced</span><span class="p">[</span><span class="s1">&#39;messages&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="n">balanced</span><span class="p">[</span><span class="s1">&#39;sentiments&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span> 
+        <span class="n">balanced</span><span class="p">[</span><span class="s1">'messages'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">balanced</span><span class="p">[</span><span class="s1">'sentiments'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span> 
 </pre></div>
 
     </div>
@@ -785,7 +872,8 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Lets check that we are balanced:</p>
 
@@ -799,8 +887,8 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">balanced</span><span class="p">[</span><span class="s1">&#39;sentiments&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">each</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">N_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">balanced</span><span class="p">[</span><span class="s1">&#39;sentiments&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_neutral</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">balanced</span><span class="p">[</span><span class="s1">'sentiments'</span><span class="p">]</span> <span class="k">if</span> <span class="n">each</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">N_examples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">balanced</span><span class="p">[</span><span class="s1">'sentiments'</span><span class="p">])</span>
 <span class="n">n_neutral</span><span class="o">/</span><span class="n">N_examples</span>
 </pre></div>
 
@@ -827,14 +915,16 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Looks good, 1/5th of our samples are neutral now.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's convert our tokens into integer ids which we can pass to the network.</p>
 
@@ -848,8 +938,8 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">token_ids</span> <span class="o">=</span> <span class="p">[[</span><span class="n">vocab</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">message</span><span class="p">]</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">balanced</span><span class="p">[</span><span class="s1">&#39;messages&#39;</span><span class="p">]]</span>
-<span class="n">sentiments</span> <span class="o">=</span> <span class="n">balanced</span><span class="p">[</span><span class="s1">&#39;sentiments&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">token_ids</span> <span class="o">=</span> <span class="p">[[</span><span class="n">vocab</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">message</span><span class="p">]</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">balanced</span><span class="p">[</span><span class="s1">'messages'</span><span class="p">]]</span>
+<span class="n">sentiments</span> <span class="o">=</span> <span class="n">balanced</span><span class="p">[</span><span class="s1">'sentiments'</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -859,11 +949,17 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Neural-Network">Neural Network<a class="anchor-link" href="#Neural-Network"> </a></h2><p>With our vocabulary mapped to interger ids, we are now ready to build our neural network.</p>
+<h2 id="Neural-Network">
+<a class="anchor" href="#Neural-Network" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neural Network<a class="anchor-link" href="#Neural-Network"> </a>
+</h2>
+<p>With our vocabulary mapped to interger ids, we are now ready to build our neural network.</p>
 <p>Here is a diagram showing the network:</p>
-<h4 id="Embed--&gt;-RNN--&gt;-Dense--&gt;-Softmax">Embed -&gt; RNN -&gt; Dense -&gt; Softmax<a class="anchor-link" href="#Embed--&gt;-RNN--&gt;-Dense--&gt;-Softmax"> </a></h4>
+<h4 id="Embed--&gt;-RNN--&gt;-Dense--&gt;-Softmax">
+<a class="anchor" href="#Embed--&gt;-RNN--&gt;-Dense--&gt;-Softmax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Embed -&gt; RNN -&gt; Dense -&gt; Softmax<a class="anchor-link" href="#Embed--&gt;-RNN--&gt;-Dense--&gt;-Softmax"> </a>
+</h4>
 </div>
 </div>
 </div>
@@ -876,7 +972,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">TextClassifier</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">embed_size</span><span class="p">,</span> <span class="n">lstm_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">lstm_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Initialize the model by setting up the layers.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -887,7 +983,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 <span class="sd">            output_size : The output size.</span>
 <span class="sd">            lstm_layers : The number of LSTM layers.</span>
 <span class="sd">            dropout : The dropout probability.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span> <span class="o">=</span> <span class="n">vocab_size</span>
@@ -909,7 +1005,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 
 
     <span class="k">def</span> <span class="nf">init_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; </span>
+        <span class="sd">""" </span>
 <span class="sd">        Initializes hidden state</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -920,7 +1016,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 <span class="sd">        -------</span>
 <span class="sd">            hidden_state</span>
 <span class="sd">            </span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="c1"># Create two new tensors with sizes n_layers x batch_size x hidden_dim,</span>
         <span class="c1"># initialized to zero, for hidden state and cell state of LSTM</span>
@@ -933,7 +1029,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nn_input</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Perform a forward pass of our model on nn_input.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -946,7 +1042,7 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 <span class="sd">            logps: log softmax output</span>
 <span class="sd">            hidden_state: The new hidden state.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># embeddings and lstm_out</span>
         <span class="n">nn_input</span> <span class="o">=</span> <span class="n">nn_input</span><span class="o">.</span><span class="n">long</span><span class="p">()</span>
         <span class="n">embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">nn_input</span><span class="p">)</span>
@@ -970,9 +1066,12 @@ That is, make sure each of our different sentiment scores show up roughly as fre
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="View-Model">View Model<a class="anchor-link" href="#View-Model"> </a></h3>
+<h3 id="View-Model">
+<a class="anchor" href="#View-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>View Model<a class="anchor-link" href="#View-Model"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -1024,9 +1123,16 @@ TextClassifier(
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Training">Training<a class="anchor-link" href="#Training"> </a></h2><h3 id="DataLoaders-and-Batching">DataLoaders and Batching<a class="anchor-link" href="#DataLoaders-and-Batching"> </a></h3><p>Now we should build a generator that we can use to loop through our data. It'll be more efficient if we can pass our sequences in as batches. Our input tensors should look like <code>(sequence_length, batch_size)</code>. So if our sequences are 40 tokens long and we pass in 25 sequences, then we'd have an input size of <code>(40, 25)</code>.</p>
+<h2 id="Training">
+<a class="anchor" href="#Training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training<a class="anchor-link" href="#Training"> </a>
+</h2>
+<h3 id="DataLoaders-and-Batching">
+<a class="anchor" href="#DataLoaders-and-Batching" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataLoaders and Batching<a class="anchor-link" href="#DataLoaders-and-Batching"> </a>
+</h3>
+<p>Now we should build a generator that we can use to loop through our data. It'll be more efficient if we can pass our sequences in as batches. Our input tensors should look like <code>(sequence_length, batch_size)</code>. So if our sequences are 40 tokens long and we pass in 25 sequences, then we'd have an input size of <code>(40, 25)</code>.</p>
 <p>If we set our sequence length to 40, what do we do with messages that are more or less than 40 tokens? For messages with fewer than 40 tokens, we will pad the empty spots with zeros. We should be sure to <strong>left</strong> pad so that the RNN starts from nothing before going through the data. If the message has 20 tokens, then the first 20 spots of our 40 long sequence will be 0. If a message has more than 40 tokens, we'll just keep the first 40 tokens.</p>
 
 </div>
@@ -1040,9 +1146,9 @@ TextClassifier(
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">dataloader</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">sequence_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; </span>
+    <span class="sd">""" </span>
 <span class="sd">    Build a dataloader.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">messages</span><span class="p">)))</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
@@ -1074,9 +1180,13 @@ TextClassifier(
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Training-and--Validation">Training and  Validation<a class="anchor-link" href="#Training-and--Validation"> </a></h3><p>Split it into training and validation sets.</p>
+<h3 id="Training-and--Validation">
+<a class="anchor" href="#Training-and--Validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training and  Validation<a class="anchor-link" href="#Training-and--Validation"> </a>
+</h3>
+<p>Split it into training and validation sets.</p>
 
 </div>
 </div>
@@ -1122,9 +1232,12 @@ TextClassifier(
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Train-model">Train model<a class="anchor-link" href="#Train-model"> </a></h3>
+<h3 id="Train-model">
+<a class="anchor" href="#Train-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Train model<a class="anchor-link" href="#Train-model"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -1135,7 +1248,7 @@ TextClassifier(
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"cpu"</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">TextClassifier</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">lstm_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -1178,10 +1291,10 @@ TextClassifier(
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">"""</span>
 <span class="sd">Train your model with dropout. Make sure to clip your gradients.</span>
 <span class="sd">Print the training loss, validation loss, and validation accuracy for every 100 steps.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1024</span>
@@ -1199,7 +1312,7 @@ TextClassifier(
 <span class="n">valid_accs</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting epoch </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Starting epoch </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     
     <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">text_batch</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">(</span>
@@ -1256,10 +1369,10 @@ TextClassifier(
 
             <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
             
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="s1"> </span><span class="se">\t</span><span class="s1">Step: </span><span class="si">{</span><span class="n">steps</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                  <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  Train Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                  <span class="sa">f</span><span class="s1">&#39;  Validation Loss: </span><span class="si">{</span><span class="n">valid_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-                  <span class="sa">f</span><span class="s1">&#39;  Validation Accy: </span><span class="si">{</span><span class="n">valid_acc</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">epochs</span><span class="si">}</span><span class="s1"> </span><span class="se">\t</span><span class="s1">Step: </span><span class="si">{</span><span class="n">steps</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span>
+                  <span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">  Train Loss: </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span>
+                  <span class="sa">f</span><span class="s1">'  Validation Loss: </span><span class="si">{</span><span class="n">valid_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span>
+                  <span class="sa">f</span><span class="s1">'  Validation Accy: </span><span class="si">{</span><span class="n">valid_acc</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
             
 </pre></div>
 
@@ -1334,7 +1447,8 @@ Epoch: 3 / 3 	Step: 800
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So we get about 72% accuracy on the validation set.
 Lets try the ULMFit approach</p>
@@ -1342,9 +1456,12 @@ Lets try the ULMFit approach</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="ULMFit-approach">ULMFit approach<a class="anchor-link" href="#ULMFit-approach"> </a></h3>
+<h3 id="ULMFit-approach">
+<a class="anchor" href="#ULMFit-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>ULMFit approach<a class="anchor-link" href="#ULMFit-approach"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -1365,7 +1482,8 @@ Lets try the ULMFit approach</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Starting from scratch</p>
 
@@ -1379,7 +1497,7 @@ Lets try the ULMFit approach</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;stocktwits_sentiment&#39;</span><span class="p">,</span> <span class="s1">&#39;twits.json&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'stocktwits_sentiment'</span><span class="p">,</span> <span class="s1">'twits.json'</span><span class="p">),</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">twits</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 
@@ -1397,9 +1515,9 @@ Lets try the ULMFit approach</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">&#39;message_body&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]]</span>
-<span class="c1"># Since the sentiment scores are discrete, we&#39;ll scale the sentiments to 0 to 4 for use in our network</span>
-<span class="n">sentiments</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">&#39;sentiment&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">'message_body'</span><span class="p">]</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]]</span>
+<span class="c1"># Since the sentiment scores are discrete, we'll scale the sentiments to 0 to 4 for use in our network</span>
+<span class="n">sentiments</span> <span class="o">=</span> <span class="p">[</span><span class="n">twit</span><span class="p">[</span><span class="s1">'sentiment'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">twit</span> <span class="ow">in</span> <span class="n">twits</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]]</span>
 </pre></div>
 
     </div>
@@ -1409,7 +1527,8 @@ Lets try the ULMFit approach</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For the preprocess step, fastai does a lot of the work for us using the Spacy tokenizer by default.  We keep track of uppercase letters so we do not lowercase everything.  Our preprocess function is therefore simplified.</p>
 
@@ -1428,19 +1547,19 @@ Lets try the ULMFit approach</p>
     <span class="n">text</span> <span class="o">=</span> <span class="n">message</span>
     
     <span class="c1"># Replace URLs with a space in the message</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;https?://[^\s]+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'https?://[^\s]+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># Replace ticker symbols with a space. The ticker symbols are any stock symbol that starts with $.</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\$[a-zA-Z]*\b&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\$[a-zA-Z]*\b'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># Replace StockTwits usernames with a space. The usernames are any word that starts with @.</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;@\w*\b&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'@\w*\b'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 
     <span class="c1"># Replace everything not a letter with a space</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^a-zA-Z]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[^a-zA-Z]'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     
     <span class="c1"># Remove multiple spaces</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
     <span class="c1"># Tokenize by splitting the string on whitespace into a list of words</span>
     <span class="c1">#tokens = text.split()</span>
 
@@ -1497,16 +1616,16 @@ Lets try the ULMFit approach</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>([&#39;great buy at ill wait&#39;,
-  &#39;&#39;,
-  &#39;STAAnalystAlert for Jefferies Maintains with a rating of Hold setting target price at USD Our own verdict is Buy&#39;,
-  &#39;I heard there s a guy who knows someone who thinks somebody knows something on StockTwits&#39;,
-  &#39;reveal yourself&#39;,
-  &#39;Why the drop I warren Buffet taking out his position&#39;,
-  &#39;bears have reason on to pay more attention&#39;,
-  &#39;ok good we re not dropping in price over the weekend lol&#39;,
-  &#39;Daily Chart we need to get back to above&#39;,
-  &#39;drop per week after spike if no news in months back to s if BO then bingo what is the odds&#39;],
+<pre>(['great buy at ill wait',
+  '',
+  'STAAnalystAlert for Jefferies Maintains with a rating of Hold setting target price at USD Our own verdict is Buy',
+  'I heard there s a guy who knows someone who thinks somebody knows something on StockTwits',
+  'reveal yourself',
+  'Why the drop I warren Buffet taking out his position',
+  'bears have reason on to pay more attention',
+  'ok good we re not dropping in price over the weekend lol',
+  'Daily Chart we need to get back to above',
+  'drop per week after spike if no news in months back to s if BO then bingo what is the odds'],
  [4, 3, 4, 3, 2, 3, 0, 3, 4, 0])</pre>
 </div>
 
@@ -1565,7 +1684,7 @@ Lets try the ULMFit approach</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="n">messages_clean</span><span class="p">,</span> <span class="s1">&#39;sentiments&#39;</span><span class="p">:</span> <span class="n">sentiments</span><span class="p">}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'messages'</span><span class="p">:</span> <span class="n">messages_clean</span><span class="p">,</span> <span class="s1">'sentiments'</span><span class="p">:</span> <span class="n">sentiments</span><span class="p">}</span>
 </pre></div>
 
     </div>
@@ -1657,7 +1776,8 @@ Lets try the ULMFit approach</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Remove blank messages</p>
 
@@ -1671,7 +1791,7 @@ Lets try the ULMFit approach</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;messages&#39;</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'messages'</span><span class="p">]</span><span class="o">!=</span><span class="s1">''</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -1796,7 +1916,8 @@ Lets try the ULMFit approach</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The first step of the ULMFit approach is to build a language model.  A model that will predict the next word given the previous words.  This is <em>self supervized learning</em>.  So in a batch we have a text buffer as input and then the same buffer plus the next word as a target.</p>
 
@@ -1810,7 +1931,7 @@ Lets try the ULMFit approach</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls</span> <span class="o">=</span> <span class="n">TextDataLoaders</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">text_col</span><span class="o">=</span><span class="s1">&#39;messages&#39;</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s1">&#39;sentiments&#39;</span><span class="p">,</span> <span class="n">is_lm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls</span> <span class="o">=</span> <span class="n">TextDataLoaders</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">text_col</span><span class="o">=</span><span class="s1">'messages'</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s1">'sentiments'</span><span class="p">,</span> <span class="n">is_lm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dls</span><span class="o">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
@@ -1878,7 +1999,8 @@ Lets try the ULMFit approach</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With this data we can now fine tune the language model.
 We will be using a recurrent neural network (RNN) using an architecture called AWD-LSTM</p>
@@ -1980,7 +2102,7 @@ We will be using a recurrent neural network (RNN) using an architecture called A
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;1epoch&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'1epoch'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1995,7 +2117,7 @@ We will be using a recurrent neural network (RNN) using an architecture called A
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Path(&#39;models&#39;)</pre>
+<pre>Path('models')</pre>
 </div>
 
 </div>
@@ -2183,7 +2305,7 @@ We will be using a recurrent neural network (RNN) using an architecture called A
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>SequentialRNN (Input shape: [&#39;64 x 72&#39;])
+<pre>SequentialRNN (Input shape: ['64 x 72'])
 ================================================================
 Layer (type)         Output Shape         Param #    Trainable 
 ================================================================
@@ -2225,7 +2347,8 @@ Callbacks:
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We now have a language model originally trained on Wikipedia data trained with Stocktwits data.  The goal is to predict the sentiment of messages but lets look at what this basic language model has learned</p>
 
@@ -2239,7 +2362,7 @@ Callbacks:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TEXT</span> <span class="o">=</span> <span class="s2">&quot;Earnings were above expectations. This stock should be trending up.&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TEXT</span> <span class="o">=</span> <span class="s2">"Earnings were above expectations. This stock should be trending up."</span>
 <span class="n">N_WORDS</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">N_SENTENCES</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="p">[</span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">N_WORDS</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span> 
@@ -2284,7 +2407,7 @@ Callbacks:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">preds</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">preds</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -2309,7 +2432,8 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We now train our model with the sentiment label now using our language model as a starting point.</p>
 
@@ -2323,7 +2447,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_clas</span> <span class="o">=</span> <span class="n">TextDataLoaders</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">text_col</span><span class="o">=</span><span class="s1">&#39;messages&#39;</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s1">&#39;sentiments&#39;</span><span class="p">,</span> <span class="n">is_lm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_clas</span> <span class="o">=</span> <span class="n">TextDataLoaders</span><span class="o">.</span><span class="n">from_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">text_col</span><span class="o">=</span><span class="s1">'messages'</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s1">'sentiments'</span><span class="p">,</span> <span class="n">is_lm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">dls_clas</span><span class="o">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
@@ -2390,7 +2514,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dls_clas</span><span class="p">,</span> <span class="s1">&#39;./models/dls_clas1.pkl&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dls_clas</span><span class="p">,</span> <span class="s1">'./models/dls_clas1.pkl'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2407,7 +2531,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_clas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./models/dls_clas1.pkl&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dls_clas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'./models/dls_clas1.pkl'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2786,7 +2910,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;after_10&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">'after_10'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2801,7 +2925,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Path(&#39;models/after_10.pth&#39;)</pre>
+<pre>Path('models/after_10.pth')</pre>
 </div>
 
 </div>
@@ -3067,7 +3191,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/usr/local/lib/python3.6/dist-packages/fastprogress/fastprogress.py:74: UserWarning: Your generator is empty.
-  warn(&#34;Your generator is empty.&#34;)
+  warn("Your generator is empty.")
 </pre>
 </div>
 </div>
@@ -3083,50 +3207,50 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastcore/logargs.py</span> in <span class="ansi-cyan-fg">_f</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">     54</span>         init_args<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>log<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     55</span>         setattr<span class="ansi-blue-fg">(</span>inst<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;init_args&#39;</span><span class="ansi-blue-fg">,</span> init_args<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     55</span>         setattr<span class="ansi-blue-fg">(</span>inst<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'init_args'</span><span class="ansi-blue-fg">,</span> init_args<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-fg">---&gt; 56</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> inst <span class="ansi-green-fg">if</span> to_return <span class="ansi-green-fg">else</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">     57</span>     <span class="ansi-green-fg">return</span> _f
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/callback/schedule.py</span> in <span class="ansi-cyan-fg">fit_one_cycle</span><span class="ansi-blue-fg">(self, n_epoch, lr_max, div, div_final, pct_start, wd, moms, cbs, reset_opt)</span>
-<span class="ansi-green-intense-fg ansi-bold">    111</span>     scheds = {&#39;lr&#39;: combined_cos(pct_start, lr_max/div, lr_max, lr_max/div_final),
-<span class="ansi-green-intense-fg ansi-bold">    112</span>               &#39;mom&#39;: combined_cos(pct_start, *(self.moms if moms is None else moms))}
+<span class="ansi-green-intense-fg ansi-bold">    111</span>     scheds = {'lr': combined_cos(pct_start, lr_max/div, lr_max, lr_max/div_final),
+<span class="ansi-green-intense-fg ansi-bold">    112</span>               'mom': combined_cos(pct_start, *(self.moms if moms is None else moms))}
 <span class="ansi-green-fg">--&gt; 113</span><span class="ansi-red-fg">     </span>self<span class="ansi-blue-fg">.</span>fit<span class="ansi-blue-fg">(</span>n_epoch<span class="ansi-blue-fg">,</span> cbs<span class="ansi-blue-fg">=</span>ParamScheduler<span class="ansi-blue-fg">(</span>scheds<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">+</span>L<span class="ansi-blue-fg">(</span>cbs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> reset_opt<span class="ansi-blue-fg">=</span>reset_opt<span class="ansi-blue-fg">,</span> wd<span class="ansi-blue-fg">=</span>wd<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    114</span> 
 <span class="ansi-green-intense-fg ansi-bold">    115</span> <span class="ansi-red-fg"># Cell</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastcore/logargs.py</span> in <span class="ansi-cyan-fg">_f</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">     54</span>         init_args<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>log<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     55</span>         setattr<span class="ansi-blue-fg">(</span>inst<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;init_args&#39;</span><span class="ansi-blue-fg">,</span> init_args<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     55</span>         setattr<span class="ansi-blue-fg">(</span>inst<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'init_args'</span><span class="ansi-blue-fg">,</span> init_args<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-fg">---&gt; 56</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> inst <span class="ansi-green-fg">if</span> to_return <span class="ansi-green-fg">else</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">     57</span>     <span class="ansi-green-fg">return</span> _f
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-fg">(self, n_epoch, lr, wd, cbs, reset_opt)</span>
 <span class="ansi-green-intense-fg ansi-bold">    205</span>             self<span class="ansi-blue-fg">.</span>opt<span class="ansi-blue-fg">.</span>set_hypers<span class="ansi-blue-fg">(</span>lr<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>lr <span class="ansi-green-fg">if</span> lr <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">else</span> lr<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    206</span>             self<span class="ansi-blue-fg">.</span>n_epoch <span class="ansi-blue-fg">=</span> n_epoch
-<span class="ansi-green-fg">--&gt; 207</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_do_fit<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;fit&#39;</span><span class="ansi-blue-fg">,</span> CancelFitException<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_end_cleanup<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 207</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_do_fit<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'fit'</span><span class="ansi-blue-fg">,</span> CancelFitException<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_end_cleanup<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    208</span> 
 <span class="ansi-green-intense-fg ansi-bold">    209</span>     <span class="ansi-green-fg">def</span> _end_cleanup<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">.</span>dl<span class="ansi-blue-fg">,</span>self<span class="ansi-blue-fg">.</span>xb<span class="ansi-blue-fg">,</span>self<span class="ansi-blue-fg">.</span>yb<span class="ansi-blue-fg">,</span>self<span class="ansi-blue-fg">.</span>pred<span class="ansi-blue-fg">,</span>self<span class="ansi-blue-fg">.</span>loss <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">(</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">(</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span><span class="ansi-green-fg">None</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_with_events</span><span class="ansi-blue-fg">(self, f, event_type, ex, final)</span>
 <span class="ansi-green-intense-fg ansi-bold">    153</span> 
 <span class="ansi-green-intense-fg ansi-bold">    154</span>     <span class="ansi-green-fg">def</span> _with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">,</span> event_type<span class="ansi-blue-fg">,</span> ex<span class="ansi-blue-fg">,</span> final<span class="ansi-blue-fg">=</span>noop<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 155</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>       self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;before_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>       <span class="ansi-blue-fg">;</span>f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_cancel_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    157</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>   self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>        <span class="ansi-blue-fg">;</span>final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 155</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>       self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'before_{event_type}'</span><span class="ansi-blue-fg">)</span>       <span class="ansi-blue-fg">;</span>f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'after_cancel_{event_type}'</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    157</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>   self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'after_{event_type}'</span><span class="ansi-blue-fg">)</span>        <span class="ansi-blue-fg">;</span>final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_do_fit</span><span class="ansi-blue-fg">(self)</span>
 <span class="ansi-green-intense-fg ansi-bold">    195</span>         <span class="ansi-green-fg">for</span> epoch <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>n_epoch<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 <span class="ansi-green-intense-fg ansi-bold">    196</span>             self<span class="ansi-blue-fg">.</span>epoch<span class="ansi-blue-fg">=</span>epoch
-<span class="ansi-green-fg">--&gt; 197</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_do_epoch<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;epoch&#39;</span><span class="ansi-blue-fg">,</span> CancelEpochException<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 197</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_do_epoch<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'epoch'</span><span class="ansi-blue-fg">,</span> CancelEpochException<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    198</span> 
-<span class="ansi-green-intense-fg ansi-bold">    199</span>     <span class="ansi-blue-fg">@</span>log_args<span class="ansi-blue-fg">(</span>but<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;cbs&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    199</span>     <span class="ansi-blue-fg">@</span>log_args<span class="ansi-blue-fg">(</span>but<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">'cbs'</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_with_events</span><span class="ansi-blue-fg">(self, f, event_type, ex, final)</span>
 <span class="ansi-green-intense-fg ansi-bold">    153</span> 
 <span class="ansi-green-intense-fg ansi-bold">    154</span>     <span class="ansi-green-fg">def</span> _with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">,</span> event_type<span class="ansi-blue-fg">,</span> ex<span class="ansi-blue-fg">,</span> final<span class="ansi-blue-fg">=</span>noop<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 155</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>       self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;before_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>       <span class="ansi-blue-fg">;</span>f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_cancel_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    157</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>   self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>        <span class="ansi-blue-fg">;</span>final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 155</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>       self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'before_{event_type}'</span><span class="ansi-blue-fg">)</span>       <span class="ansi-blue-fg">;</span>f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'after_cancel_{event_type}'</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    157</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>   self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'after_{event_type}'</span><span class="ansi-blue-fg">)</span>        <span class="ansi-blue-fg">;</span>final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_do_epoch</span><span class="ansi-blue-fg">(self)</span>
 <span class="ansi-green-intense-fg ansi-bold">    189</span> 
@@ -3138,16 +3262,16 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_do_epoch_train</span><span class="ansi-blue-fg">(self)</span>
 <span class="ansi-green-intense-fg ansi-bold">    181</span>     <span class="ansi-green-fg">def</span> _do_epoch_train<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 <span class="ansi-green-intense-fg ansi-bold">    182</span>         self<span class="ansi-blue-fg">.</span>dl <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>dls<span class="ansi-blue-fg">.</span>train
-<span class="ansi-green-fg">--&gt; 183</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>all_batches<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;train&#39;</span><span class="ansi-blue-fg">,</span> CancelTrainException<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 183</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>all_batches<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'train'</span><span class="ansi-blue-fg">,</span> CancelTrainException<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    184</span> 
 <span class="ansi-green-intense-fg ansi-bold">    185</span>     <span class="ansi-green-fg">def</span> _do_epoch_validate<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> ds_idx<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> dl<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_with_events</span><span class="ansi-blue-fg">(self, f, event_type, ex, final)</span>
 <span class="ansi-green-intense-fg ansi-bold">    153</span> 
 <span class="ansi-green-intense-fg ansi-bold">    154</span>     <span class="ansi-green-fg">def</span> _with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">,</span> event_type<span class="ansi-blue-fg">,</span> ex<span class="ansi-blue-fg">,</span> final<span class="ansi-blue-fg">=</span>noop<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 155</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>       self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;before_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>       <span class="ansi-blue-fg">;</span>f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_cancel_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    157</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>   self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>        <span class="ansi-blue-fg">;</span>final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 155</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>       self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'before_{event_type}'</span><span class="ansi-blue-fg">)</span>       <span class="ansi-blue-fg">;</span>f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'after_cancel_{event_type}'</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    157</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>   self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'after_{event_type}'</span><span class="ansi-blue-fg">)</span>        <span class="ansi-blue-fg">;</span>final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">all_batches</span><span class="ansi-blue-fg">(self)</span>
 <span class="ansi-green-intense-fg ansi-bold">    159</span>     <span class="ansi-green-fg">def</span> all_batches<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
@@ -3194,8 +3318,8 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/data/core.py</span> in <span class="ansi-cyan-fg">__getattr__</span><span class="ansi-blue-fg">(self, k)</span>
 <span class="ansi-green-intense-fg ansi-bold">    315</span>         <span class="ansi-green-fg">return</span> res <span class="ansi-green-fg">if</span> is_indexer<span class="ansi-blue-fg">(</span>it<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">else</span> list<span class="ansi-blue-fg">(</span>zip<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>res<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    316</span> 
-<span class="ansi-green-fg">--&gt; 317</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">def</span> __getattr__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span>k<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> gather_attrs<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> k<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;tls&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    318</span>     <span class="ansi-green-fg">def</span> __dir__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>__dir__<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> gather_attr_names<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;tls&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 317</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">def</span> __getattr__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span>k<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> gather_attrs<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> k<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'tls'</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    318</span>     <span class="ansi-green-fg">def</span> __dir__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>__dir__<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> gather_attr_names<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'tls'</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    319</span>     <span class="ansi-green-fg">def</span> __len__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span> len<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>tls<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastcore/transform.py</span> in <span class="ansi-cyan-fg">gather_attrs</span><span class="ansi-blue-fg">(o, k, nm)</span>
@@ -3243,17 +3367,17 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/callback/hook.py</span> in <span class="ansi-cyan-fg">summary</span><span class="ansi-blue-fg">(self)</span>
 <span class="ansi-green-intense-fg ansi-bold">    186</span> <span class="ansi-green-fg">def</span> summary<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">:</span>Learner<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    187</span>     <span class="ansi-blue-fg">&#34;Print a summary of the model, optimizer and loss function.&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    187</span>     <span class="ansi-blue-fg">"Print a summary of the model, optimizer and loss function."</span>
 <span class="ansi-green-fg">--&gt; 188</span><span class="ansi-red-fg">     </span>xb <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>dls<span class="ansi-blue-fg">.</span>train<span class="ansi-blue-fg">.</span>one_batch<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">:</span>self<span class="ansi-blue-fg">.</span>dls<span class="ansi-blue-fg">.</span>train<span class="ansi-blue-fg">.</span>n_inp<span class="ansi-blue-fg">]</span>
 <span class="ansi-green-intense-fg ansi-bold">    189</span>     res <span class="ansi-blue-fg">=</span> module_summary<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>xb<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    190</span>     res <span class="ansi-blue-fg">+=</span> <span class="ansi-blue-fg">f&#34;Optimizer used: {self.opt_func}\nLoss function: {self.loss_func}\n\n&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    190</span>     res <span class="ansi-blue-fg">+=</span> <span class="ansi-blue-fg">f"Optimizer used: {self.opt_func}\nLoss function: {self.loss_func}\n\n"</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/fastai/data/load.py</span> in <span class="ansi-cyan-fg">one_batch</span><span class="ansi-blue-fg">(self)</span>
 <span class="ansi-green-intense-fg ansi-bold">    133</span>     <span class="ansi-green-fg">def</span> to<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> device<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">.</span>device <span class="ansi-blue-fg">=</span> device
 <span class="ansi-green-intense-fg ansi-bold">    134</span>     <span class="ansi-green-fg">def</span> one_batch<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>n <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> len<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">==</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;This DataLoader does not contain any batches&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>n <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> len<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">==</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f'This DataLoader does not contain any batches'</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    136</span>         <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>fake_l<span class="ansi-blue-fg">.</span>no_multiproc<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> res <span class="ansi-blue-fg">=</span> first<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;it&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> delattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;it&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'it'</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> delattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'it'</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-red-fg">ValueError</span>: This DataLoader does not contain any batches</pre>
 </div>
@@ -3272,7 +3396,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;export2_1.pkl&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">'export2_1.pkl'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3289,7 +3413,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">&#39;$AAPL doing my part. Just bought my first iPad&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL doing my part. Just bought my first iPad'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3313,7 +3437,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;4&#39;,
+<pre>('4',
  tensor(4),
  tensor([4.7856e-04, 2.6827e-02, 4.5500e-02, 5.6848e-02, 8.7035e-01]))</pre>
 </div>
@@ -3333,7 +3457,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">&#39;$AAPL historic reversal selloff on news , historic crash news&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL historic reversal selloff on news , historic crash news'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3357,7 +3481,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;0&#39;,
+<pre>('0',
  tensor(0),
  tensor([9.7967e-01, 2.6304e-04, 1.2899e-02, 7.1583e-03, 4.8937e-06]))</pre>
 </div>
@@ -3377,7 +3501,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">&#39;$AAPL well that was a good trade&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL well that was a good trade'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3401,7 +3525,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;2&#39;, tensor(2), tensor([0.0092, 0.0419, 0.7770, 0.1612, 0.0107]))</pre>
+<pre>('2', tensor(2), tensor([0.0092, 0.0419, 0.7770, 0.1612, 0.0107]))</pre>
 </div>
 
 </div>
@@ -3419,7 +3543,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">&#39;Sold my $AAPL 10/16 $120c this morning and MAN I&amp;#39;m glad I&amp;#39;m out of there!</span><span class="se">\n\n</span><span class="s1">Although, this was one of my favorite trades,  holding through the volatility last week was ROUGH and I didn&amp;#39;t want to be caught holding the bag (after the iPhone event)</span><span class="se">\n\n</span><span class="s1">What&amp;#39;s next? since $SPY  making a new high... Might looks for some shorts now 🐻🐻🐻&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'Sold my $AAPL 10/16 $120c this morning and MAN I&amp;#39;m glad I&amp;#39;m out of there!</span><span class="se">\n\n</span><span class="s1">Although, this was one of my favorite trades,  holding through the volatility last week was ROUGH and I didn&amp;#39;t want to be caught holding the bag (after the iPhone event)</span><span class="se">\n\n</span><span class="s1">What&amp;#39;s next? since $SPY  making a new high... Might looks for some shorts now 🐻🐻🐻'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3443,7 +3567,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;3&#39;,
+<pre>('3',
  tensor(3),
  tensor([4.4554e-04, 4.8995e-02, 3.4516e-01, 6.0069e-01, 4.7157e-03]))</pre>
 </div>
@@ -3463,7 +3587,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">&#39;$AAPL the news already leaked. Nothing new just a battery that last an extra hour and the 5G. They are going to launch 4 phones. Probably this time they will introduce the middle finger option to unlock the phone. To make the idiots happy that they brought something new. Lol&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL the news already leaked. Nothing new just a battery that last an extra hour and the 5G. They are going to launch 4 phones. Probably this time they will introduce the middle finger option to unlock the phone. To make the idiots happy that they brought something new. Lol'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3487,7 +3611,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;2&#39;,
+<pre>('2',
  tensor(2),
  tensor([1.2910e-04, 1.0833e-02, 8.2918e-01, 1.5977e-01, 8.7016e-05]))</pre>
 </div>
@@ -3504,7 +3628,15 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 
 
 
-  </div><a class="u-url" href="/aimusing/2020/10/19/fastai_ulmfit_vs_pytorch_stocktwits.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="sylvaint/aimusing"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
