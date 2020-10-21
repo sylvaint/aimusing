@@ -1,1 +1,1 @@
-Sitemap: https://sylvaint.github.io/aimusing/sitemap.xml
+Sitemap: https://sylvaint.dev/aimusing/sitemap.xml

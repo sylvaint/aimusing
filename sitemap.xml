@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://sylvaint.github.io/aimusing/markdown/2020/01/14/test-markdown-post.html</loc>
+<loc>https://sylvaint.dev/aimusing/markdown/2020/01/14/test-markdown-post.html</loc>
 <lastmod>2020-01-14T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html</loc>
+<loc>https://sylvaint.dev/aimusing/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html</loc>
 <lastmod>2020-10-20T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>https://sylvaint.github.io/aimusing/about/</loc>
+<loc>https://sylvaint.dev/aimusing/about/</loc>
 </url>
 <url>
-<loc>https://sylvaint.github.io/aimusing/</loc>
+<loc>https://sylvaint.dev/aimusing/</loc>
 </url>
 <url>
-<loc>https://sylvaint.github.io/aimusing/search/</loc>
+<loc>https://sylvaint.dev/aimusing/search/</loc>
 </url>
 <url>
-<loc>https://sylvaint.github.io/aimusing/categories/</loc>
+<loc>https://sylvaint.dev/aimusing/categories/</loc>
 </url>
 </urlset>

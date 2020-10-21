@@ -11,15 +11,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis." />
 <meta property="og:description" content="Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis." />
-<link rel="canonical" href="https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
-<meta property="og:url" content="https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
+<link rel="canonical" href="https://sylvaint.dev/aimusing/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
+<meta property="og:url" content="https://sylvaint.dev/aimusing/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
 <meta property="og:site_name" content="AI quant experiments" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-10-20T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.","url":"https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html","@type":"BlogPosting","headline":"fastai ULMFit approach performance versus standard NLP Pytorch model","dateModified":"2020-10-20T00:00:00-05:00","datePublished":"2020-10-20T00:00:00-05:00","author":{"@type":"Person","name":"Sylvain Thibault"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.github.io/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html"},"@context":"https://schema.org"}</script>
+{"description":"Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.","url":"https://sylvaint.dev/aimusing/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html","@type":"BlogPosting","headline":"fastai ULMFit approach performance versus standard NLP Pytorch model","dateModified":"2020-10-20T00:00:00-05:00","datePublished":"2020-10-20T00:00:00-05:00","author":{"@type":"Person","name":"Sylvain Thibault"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.dev/aimusing/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/aimusing/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sylvaint.github.io/aimusing/feed.xml" title="AI quant experiments" /><link rel="shortcut icon" type="image/x-icon" href="/aimusing/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="/aimusing/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sylvaint.dev/aimusing/feed.xml" title="AI quant experiments" /><link rel="shortcut icon" type="image/x-icon" href="/aimusing/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
 <script>
@@ -80,7 +80,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      30 min read
+      31 min read
     
 </span></p>
 
@@ -91,6 +91,9 @@ window.onload = wrap_img;
         &nbsp;
       
         <a class="category-tags-link" href="/aimusing/categories/#ULMFit">ULMFit</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/aimusing/categories/#Stocktwits">Stocktwits</a>
         
       
       </p>
@@ -167,7 +170,7 @@ window.onload = wrap_img;
 <h2 id="Introduction">
 <a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
 </h2>
-<p>In this project we will be comparing the results from a sentiment analysis model using a RNN implemented directly in PyTorch with another using the Fastai library with the ULMFit (Universal Language Model Fine-tuning) approach from this <a href="https://arxiv.org/abs/1801.06146">paper</a>.</p>
+<p>In this project we will be comparing the results from a sentiment analysis model using a RNN implemented directly in PyTorch with another using the Fastai library with the ULMFit (Universal Language Model Fine-tuning) approach from this <a href="https://arxiv.org/abs/1801.06146">paper</a> from Jeremy Howard and Sebastian Ruder.</p>
 <p>The ULMFit approach involves using a language model first and then train it with the new vocabulary from the new application.  Once our language model has been trained with the added new data, we use it as the base from our classification problem.  A language model is a model that has been trained to guess the next word coming in a text from having seen the words that came before.  This kind of process is called <em>self supervized learning</em>.  In this case, no labels are provided to our model.</p>
 <p>Lets move onto the actual classification problem we are going to solve.</p>
 <p>When deciding the value of a company, it's important to follow the news. For example, a product recall or natural disaster in a company's product chain. You want to be able to turn this information into a signal.</p>
@@ -3636,7 +3639,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/aimusing/ai%20for%20trading/ulmfit/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" hidden></a>
+</script><a class="u-url" href="/aimusing/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
@@ -3659,7 +3662,7 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
       </div>
     </div>
 
-    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/aimusing/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/aimusing/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/sylvaint" title="sylvaint"><svg class="svg-icon grey"><use xlink:href="/aimusing/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/greytrader" title="greytrader"><svg class="svg-icon grey"><use xlink:href="/aimusing/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
 </div>
 
   </div>
