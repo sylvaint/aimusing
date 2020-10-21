@@ -14,7 +14,7 @@ github_repo: "aimusing"
 
 # OPTIONAL: override baseurl and url if using a custom domain
 # Note: leave out the trailing / from this value. 
-url: "https://sylvaint.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://sylvaint.dev" # the base hostname & protocol for your site, e.g. http://example.com
 
 ###########################################################
 #########  Special Instructions for baseurl ###############
@@ -39,8 +39,8 @@ baseurl: "/aimusing" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: fastdotai
-    github: fastai
+    twitter: greytrader
+    github: sylvaint
 
 # Set this to true to get LaTeX math equation support
 use_math: 
