@@ -183,7 +183,15 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Create-the-data-loader-with-sentiment-labels">Create the data loader with sentiment labels </a></li>
 <li class="toc-entry toc-h3"><a href="#Create-the-learner-to-classify-our-"Twits"">Create the learner to classify our &quot;Twits&quot; </a></li>
 <li class="toc-entry toc-h3"><a href="#Fine-tuning-the-classifier">Fine tuning the classifier </a></li>
-<li class="toc-entry toc-h3"><a href="#Predictions-with-the-ULMFit-model">Predictions with the ULMFit model </a></li>
+<li class="toc-entry toc-h3"><a href="#Predictions-with-the-ULMFit-model">Predictions with the ULMFit model </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Very-positive">Very positive </a></li>
+<li class="toc-entry toc-h4"><a href="#Very-negative">Very negative </a></li>
+<li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
+<li class="toc-entry toc-h4"><a href="#Positive">Positive </a></li>
+<li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul><!--
@@ -207,7 +215,7 @@ window.onload = wrap_img;
 <p>When deciding the value of a company, it's important to follow the news. For example, a product recall or natural disaster in a company's product chain. You want to be able to turn this information into a signal.</p>
 <p>We will be using posts from the social media site <a href="https://en.wikipedia.org/wiki/StockTwits">StockTwits</a>. The community on StockTwits is full of investors, traders, and entrepreneurs. Each message posted is called a Twit. This is similar to Twitter's version of a post, called a Tweet. We will build a model around these twits that generate a sentiment score.</p>
 <p>The data is a large collection of messages that where hand labeled with the sentiment of each.  The degree of sentiment is a five-point scale: very negative, negative, neutral, positive, very positive. Each twit is labeled -2 to 2 in steps of 1, from very negative to very positive respectively.</p>
-<p>The first thing we should to do, is load the data.</p>
+<p>The first thing we should do, is load the data.</p>
 <h2 id="PyTorch-NLP-model">
 <a class="anchor" href="#PyTorch-NLP-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>PyTorch NLP model<a class="anchor-link" href="#PyTorch-NLP-model"> </a>
 </h2>
@@ -2960,7 +2968,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Around 79% accuracy which is 7% more than our basic PyTorch model.  That is a significant improvement.
+<p>Around 79% accuracy which is 7% more than our basic PyTorch model.  This is a significant improvement.
 Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
 
 </div>
@@ -2986,6 +2994,15 @@ Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
 <li>4: very positive</li>
 </ul>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Very-positive">
+<a class="anchor" href="#Very-positive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Very positive<a class="anchor-link" href="#Very-positive"> </a>
+</h4>
 </div>
 </div>
 </div>
@@ -3033,6 +3050,15 @@ Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Very-negative">
+<a class="anchor" href="#Very-negative" aria-hidden="true"><span class="octicon octicon-link"></span></a>Very negative<a class="anchor-link" href="#Very-negative"> </a>
+</h4>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -3077,6 +3103,15 @@ Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Neutral">
+<a class="anchor" href="#Neutral" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neutral<a class="anchor-link" href="#Neutral"> </a>
+</h4>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -3119,6 +3154,15 @@ Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Positive">
+<a class="anchor" href="#Positive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Positive<a class="anchor-link" href="#Positive"> </a>
+</h4>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -3163,6 +3207,15 @@ Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Neutral">
+<a class="anchor" href="#Neutral" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neutral<a class="anchor-link" href="#Neutral"> </a>
+</h4>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
