@@ -4,22 +4,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>fastai ULMFit approach performance versus standard NLP Pytorch model | AI quant experiments</title>
+<title>fastai ULMFit versus a vanilla NLP Pytorch classification model for StockTwits messages | AI quant musings</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="fastai ULMFit approach performance versus standard NLP Pytorch model" />
+<meta property="og:title" content="fastai ULMFit versus a vanilla NLP Pytorch classification model for StockTwits messages" />
 <meta name="author" content="Sylvain Thibault" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis." />
 <meta property="og:description" content="Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis." />
 <link rel="canonical" href="https://sylvaint.dev/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
 <meta property="og:url" content="https://sylvaint.dev/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html" />
-<meta property="og:site_name" content="AI quant experiments" />
+<meta property="og:site_name" content="AI quant musings" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-10-20T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://sylvaint.dev/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html","@type":"BlogPosting","headline":"fastai ULMFit approach performance versus standard NLP Pytorch model","dateModified":"2020-10-20T00:00:00-05:00","datePublished":"2020-10-20T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.dev/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html"},"author":{"@type":"Person","name":"Sylvain Thibault"},"description":"Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.","@context":"https://schema.org"}</script>
+{"url":"https://sylvaint.dev/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html","@type":"BlogPosting","headline":"fastai ULMFit versus a vanilla NLP Pytorch classification model for StockTwits messages","dateModified":"2020-10-20T00:00:00-05:00","datePublished":"2020-10-20T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.dev/ai%20for%20trading/ulmfit/stocktwits/2020/10/20/fastai_ulmfit_vs_pytorch_stocktwits.html"},"author":{"@type":"Person","name":"Sylvain Thibault"},"description":"Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sylvaint.dev/feed.xml" title="AI quant experiments" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sylvaint.dev/feed.xml" title="AI quant musings" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
 <script>
@@ -54,7 +54,7 @@ window.onload = wrap_img;
 </head>
 <body><header class="site-header">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">AI quant experiments</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">AI quant musings</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -72,7 +72,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">fastai ULMFit approach performance versus standard NLP Pytorch model</h1><p class="page-description">Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-20T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">fastai ULMFit versus a vanilla NLP Pytorch classification model for StockTwits messages</h1><p class="page-description">Comparing the performance of ULMFit with a standard NLP Pytorch model for StockTwits message sentiment analysis.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-20T00:00:00-05:00" itemprop="datePublished">
         Oct 20, 2020
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -80,7 +80,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      26 min read
+      27 min read
     
 </span></p>
 
@@ -126,8 +126,7 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#Introduction">Introduction </a></li>
-<li class="toc-entry toc-h2"><a href="#PyTorch-NLP-model">PyTorch NLP model </a></li>
-<li class="toc-entry toc-h2"><a href="#Import-Twits">Import Twits </a>
+<li class="toc-entry toc-h2"><a href="#PyTorch-NLP-model">PyTorch NLP model </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Load-Twits-Data">Load Twits Data </a></li>
 <li class="toc-entry toc-h3"><a href="#Length-of-data">Length of data </a></li>
@@ -179,7 +178,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Test-our-basic-language-model">Test our basic language model </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#-">  </a></li>
 <li class="toc-entry toc-h2"><a href="#Classifier-for-Stocktwits-sentiments">Classifier for Stocktwits sentiments </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Create-the-data-loader-with-sentiment-labels">Create the data loader with sentiment labels </a></li>
@@ -212,9 +210,6 @@ window.onload = wrap_img;
 <p>The first thing we should to do, is load the data.</p>
 <h2 id="PyTorch-NLP-model">
 <a class="anchor" href="#PyTorch-NLP-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>PyTorch NLP model<a class="anchor-link" href="#PyTorch-NLP-model"> </a>
-</h2>
-<h2 id="Import-Twits">
-<a class="anchor" href="#Import-Twits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Import Twits<a class="anchor-link" href="#Import-Twits"> </a>
 </h2>
 <h3 id="Load-Twits-Data">
 <a class="anchor" href="#Load-Twits-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Load Twits Data<a class="anchor-link" href="#Load-Twits-Data"> </a>
@@ -2540,15 +2535,6 @@ Earnings were above expectations xxunk This stock should be trending up xxunk Lo
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="-">
-<a class="anchor" href="#-" aria-hidden="true"><span class="octicon octicon-link"></span></a> <a class="anchor-link" href="#-"> </a>
-</h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Classifier-for-Stocktwits-sentiments">
 <a class="anchor" href="#Classifier-for-Stocktwits-sentiments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classifier for Stocktwits sentiments<a class="anchor-link" href="#Classifier-for-Stocktwits-sentiments"> </a>
 </h2>
@@ -2971,6 +2957,15 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Around 79% accuracy which is 7% more than our basic PyTorch model.  That is a significant improvement.
+Almost 80% accuracy on a 5 level classifier, that is impressive.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
