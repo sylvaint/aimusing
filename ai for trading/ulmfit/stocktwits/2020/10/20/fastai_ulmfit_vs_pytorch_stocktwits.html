@@ -188,7 +188,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h4"><a href="#Very-positive">Very positive </a></li>
 <li class="toc-entry toc-h4"><a href="#Very-negative">Very negative </a></li>
 <li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
-<li class="toc-entry toc-h4"><a href="#Positive">Positive </a></li>
+<li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
 <li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
 </ul>
 </li>
@@ -3062,7 +3062,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Around 75% accuracy which is 3% more than our basic PyTorch model.  This is slightly better than our straight PyTorch model.
-75% accuracy on a 5 level classifier, that is impressive.</p>
+75% accuracy on a 5 level classifier is quite impressive.</p>
 
 </div>
 </div>
@@ -3132,7 +3132,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="output_text output_subarea output_execute_result">
 <pre>('4',
  tensor(4),
- tensor([4.7856e-04, 2.6827e-02, 4.5500e-02, 5.6848e-02, 8.7035e-01]))</pre>
+ tensor([ tensor([    0.0003,     0.0176,     0.0395,     0.0209,     0.9217]))]))</pre>
 </div>
 
 </div>
@@ -3185,7 +3185,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="output_text output_subarea output_execute_result">
 <pre>('0',
  tensor(0),
- tensor([9.7967e-01, 2.6304e-04, 1.2899e-02, 7.1583e-03, 4.8937e-06]))</pre>
+ tensor([[    0.8399,     0.0051,     0.0703,     0.0847,     0.0000])]))</pre>
 </div>
 
 </div>
@@ -3236,7 +3236,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>('2', tensor(2), tensor([0.0092, 0.0419, 0.7770, 0.1612, 0.0107]))</pre>
+<pre>('2', tensor(2), tensor([[0.0055, 0.0330, 0.8183, 0.1387, 0.0045])]))</pre>
 </div>
 
 </div>
@@ -3250,8 +3250,8 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Positive">
-<a class="anchor" href="#Positive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Positive<a class="anchor-link" href="#Positive"> </a>
+<h4 id="Neutral">
+<a class="anchor" href="#Neutral" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neutral<a class="anchor-link" href="#Neutral"> </a>
 </h4>
 </div>
 </div>
@@ -3287,9 +3287,9 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>('3',
- tensor(3),
- tensor([4.4554e-04, 4.8995e-02, 3.4516e-01, 6.0069e-01, 4.7157e-03]))</pre>
+<pre>('1',
+ tensor(1),
+ tensor([0.0031, 0.1121, 0.4751, 0.4063, 0.0034]))</pre>
 </div>
 
 </div>
@@ -3342,7 +3342,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="output_text output_subarea output_execute_result">
 <pre>('2',
  tensor(2),
- tensor([1.2910e-04, 1.0833e-02, 8.2918e-01, 1.5977e-01, 8.7016e-05]))</pre>
+ tensor([    0.0001,     0.0303,     0.7729,     0.1964,     0.0002]))</pre>
 </div>
 
 </div>
