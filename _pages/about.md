@@ -3,7 +3,7 @@ layout: page
 title: About Me
 permalink: /about/
 ---
-![image-title-here](./images/sth.jpeg){:class="img-responsive"}
+![image-title-here](../images/sth.jpeg){:class="img-responsive"}
 
 I am a former aeronautical Engineer who specialized in advanced flight simulation.
 About 10 years ago I started trading stocks and building tools to help with trade data analysis.
