@@ -18,7 +18,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "I am a former aeronautical Engineer who specialized in advanced flight simulation. About 10 years ago I started trading stocks and building tools to help with trade data analysis. As a full stack developper I have created many trading applications. . I am interested in AI stock trading applications. .",
+          "content": "![my pict] (./images/sth.jpeg) . I am a former aeronautical Engineer who specialized in advanced flight simulation. About 10 years ago I started trading stocks and building tools to help with trade data analysis. As a full stack developper I have created many trading applications. . I am interested in AI stock trading applications. .",
           "url": "https://sylvaint.dev/about/",
           "relUrl": "/about/",
           "date": ""
