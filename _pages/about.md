@@ -4,4 +4,8 @@ title: About Me
 permalink: /about/
 ---
 
-I am a Software Engineer interested in AI stock trading applications.
+I am a former aeronautical Engineer who specialized in advanced flight simulation.
+About 10 years ago I started trading stocks and building tools to help with trade data analysis.
+As a full stack developper I have created many trading applications.
+
+I am interested in AI stock trading applications.
