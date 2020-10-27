@@ -187,8 +187,8 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h4"><a href="#Very-positive">Very positive </a></li>
 <li class="toc-entry toc-h4"><a href="#Very-negative">Very negative </a></li>
-<li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
-<li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
+<li class="toc-entry toc-h4"><a href="#Very-Positive">Very Positive </a></li>
+<li class="toc-entry toc-h4"><a href="#Negative">Negative </a></li>
 <li class="toc-entry toc-h4"><a href="#Neutral">Neutral </a></li>
 </ul>
 </li>
@@ -3106,7 +3106,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL doing my part. Just bought my first iPad'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">preprocess</span><span class="p">(</span><span class="s1">'$AAPL doing my part. Just bought my first iPad'</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -3159,7 +3159,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL historic reversal selloff on news , historic crash news'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">preprocess</span><span class="p">(</span><span class="s1">'$AAPL historic reversal selloff on news , historic crash news'</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -3199,8 +3199,8 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Neutral">
-<a class="anchor" href="#Neutral" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neutral<a class="anchor-link" href="#Neutral"> </a>
+<h4 id="Very-Positive">
+<a class="anchor" href="#Very-Positive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Very Positive<a class="anchor-link" href="#Very-Positive"> </a>
 </h4>
 </div>
 </div>
@@ -3212,7 +3212,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL well that was a good trade'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn_inf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">preprocess</span><span class="p">(</span><span class="s1">'$TSLA if you haven’t seen it yet, Tsla had a double bottom and has upward momentum. $410 is strong support and this might close the week above $440. Only positive news from now till Election Day'</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -3236,9 +3236,62 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>('2',
- tensor(2),
- tensor([    0.0055,     0.0330,     0.8183,     0.1387,     0.0045]))</pre>
+<pre>('4',
+ tensor(4),
+ tensor([    0.0001,     0.0003,     0.0320,     0.0357,     0.9319]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Negative">
+<a class="anchor" href="#Negative" aria-hidden="true"><span class="octicon octicon-link"></span></a>Negative<a class="anchor-link" href="#Negative"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">preprocess</span><span class="p">(</span><span class="s1">'Sold my $AAPL 10/16 $120c this morning and MAN I&amp;#39;m glad I&amp;#39;m out of there!</span><span class="se">\n\n</span><span class="s1">Although, this was one of my favorite trades,  holding through the volatility last week was ROUGH and I didn&amp;#39;t want to be caught holding the bag (after the iPhone event)</span><span class="se">\n\n</span><span class="s1">What&amp;#39;s next? since $SPY  making a new high... Might looks for some shorts now 🐻🐻🐻'</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>('1',
+ tensor(1),
+ tensor([    0.0524,     0.7317,     0.0754,     0.1390,     0.0015]))</pre>
 </div>
 
 </div>
@@ -3265,60 +3318,7 @@ For NLP classifiers, the fastai library authors found that unfreezing a few laye
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'Sold my $AAPL 10/16 $120c this morning and MAN I&amp;#39;m glad I&amp;#39;m out of there!</span><span class="se">\n\n</span><span class="s1">Although, this was one of my favorite trades,  holding through the volatility last week was ROUGH and I didn&amp;#39;t want to be caught holding the bag (after the iPhone event)</span><span class="se">\n\n</span><span class="s1">What&amp;#39;s next? since $SPY  making a new high... Might looks for some shorts now 🐻🐻🐻'</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea ">
-
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>('2',
- tensor(2),
- tensor([    0.0031,     0.1121,     0.4751,     0.4063,     0.0034]))</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Neutral">
-<a class="anchor" href="#Neutral" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neutral<a class="anchor-link" href="#Neutral"> </a>
-</h4>
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s1">'$AAPL the news already leaked. Nothing new just a battery that last an extra hour and the 5G. They are going to launch 4 phones. Probably this time they will introduce the middle finger option to unlock the phone. To make the idiots happy that they brought something new. Lol'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">preprocess</span><span class="p">(</span><span class="s1">'$AAPL the news already leaked. Nothing new just a battery that last an extra hour and the 5G. They are going to launch 4 phones. Probably this time they will introduce the middle finger option to unlock the phone. To make the idiots happy that they brought something new. Lol'</span><span class="p">))</span>
 </pre></div>
 
     </div>
