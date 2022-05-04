@@ -4,19 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | AI quant musings</title>
+<title>Breast Cancer CT Scan dataset with fastai | AI quant musings</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="Breast Cancer CT Scan dataset with fastai" />
+<meta name="author" content="Sylvain Thibault" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="My journey applying AI to quant trading." />
-<meta property="og:description" content="My journey applying AI to quant trading." />
-<link rel="canonical" href="https://sylvaint.dev/2022/05/04/fastai_breast_cancer_ct.html" />
-<meta property="og:url" content="https://sylvaint.dev/2022/05/04/fastai_breast_cancer_ct.html" />
+<meta name="description" content="Basic vision model in the scope of Part 1 (2022) fastai Deep learning course" />
+<meta property="og:description" content="Basic vision model in the scope of Part 1 (2022) fastai Deep learning course" />
+<link rel="canonical" href="https://sylvaint.dev/datasets/s3%20partners/eda/2022/05/04/fastai_breast_cancer_ct.html" />
+<meta property="og:url" content="https://sylvaint.dev/datasets/s3%20partners/eda/2022/05/04/fastai_breast_cancer_ct.html" />
 <meta property="og:site_name" content="AI quant musings" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-05-04T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://sylvaint.dev/2022/05/04/fastai_breast_cancer_ct.html","@type":"BlogPosting","headline":"Title","dateModified":"2022-05-04T00:00:00-05:00","datePublished":"2022-05-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.dev/2022/05/04/fastai_breast_cancer_ct.html"},"description":"My journey applying AI to quant trading.","@context":"https://schema.org"}</script>
+{"url":"https://sylvaint.dev/datasets/s3%20partners/eda/2022/05/04/fastai_breast_cancer_ct.html","@type":"BlogPosting","headline":"Breast Cancer CT Scan dataset with fastai","dateModified":"2022-05-04T00:00:00-05:00","datePublished":"2022-05-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://sylvaint.dev/datasets/s3%20partners/eda/2022/05/04/fastai_breast_cancer_ct.html"},"author":{"@type":"Person","name":"Sylvain Thibault"},"description":"Basic vision model in the scope of Part 1 (2022) fastai Deep learning course","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://sylvaint.dev/feed.xml" title="AI quant musings" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,9 +72,11 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-05-04T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Breast Cancer CT Scan dataset with fastai</h1><p class="page-description">Basic vision model in the scope of Part 1 (2022) fastai Deep learning course</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-05-04T00:00:00-05:00" itemprop="datePublished">
         May 4, 2022
-      </time>
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Sylvain Thibault</span></span>
        • <span class="read-time" title="Estimated read time">
     
     
@@ -81,6 +84,19 @@ window.onload = wrap_img;
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#Datasets">Datasets</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#S3 Partners">S3 Partners</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#EDA">EDA</a>
+        
+      
+      </p>
     
 
     
@@ -108,7 +124,12 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+<li class="toc-entry toc-h4"><a href="#We-have-3600-Breast-CT-scans-size-384-x-156-with-labels-and-a-mask">We have 3600 Breast CT scans size 384 x 156 with labels and a mask </a></li>
+<li class="toc-entry toc-h3"><a href="#Lets-look-at-an-image">Lets look at an image </a></li>
+<li class="toc-entry toc-h3"><a href="#And-the-corresponding-mask">And the corresponding mask </a></li>
+<li class="toc-entry toc-h3"><a href="#DataBlock">DataBlock </a></li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -117,7 +138,8 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Most of my experience with ML and Deep learning has been with tabular data and NLP.
 Here is a basic vision model with the fastai library in the scope of Part 1 (2022) fastai Deep learning course.</p>
@@ -157,16 +179,16 @@ The dataset has 3 categorical labels:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">masks</span> <span class="o">=</span> <span class="n">jlb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../input/bcfpp/BCFPP.jlb&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">masks</span> <span class="o">=</span> <span class="n">jlb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'../input/bcfpp/BCFPP.jlb'</span><span class="p">)</span>
 
 <span class="c1"># labels contains 3 classes (0 for Cancer, 1 for Benign and 2 for normal)</span>
 
 <span class="n">images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
 
 <span class="c1"># lets see what we got</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;images: </span><span class="si">{</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;labels: </span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;masks: </span><span class="si">{</span><span class="n">masks</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"images: </span><span class="si">{</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"labels: </span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"masks: </span><span class="si">{</span><span class="n">masks</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -176,15 +198,21 @@ The dataset has 3 categorical labels:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="We-have-3600-Breast-CT-scans-size-384-x-156-with-labels-and-a-mask">We have 3600 Breast CT scans size 384 x 156 with labels and a mask<a class="anchor-link" href="#We-have-3600-Breast-CT-scans-size-384-x-156-with-labels-and-a-mask"> </a></h4>
+<h4 id="We-have-3600-Breast-CT-scans-size-384-x-156-with-labels-and-a-mask">
+<a class="anchor" href="#We-have-3600-Breast-CT-scans-size-384-x-156-with-labels-and-a-mask" aria-hidden="true"><span class="octicon octicon-link"></span></a>We have 3600 Breast CT scans size 384 x 156 with labels and a mask<a class="anchor-link" href="#We-have-3600-Breast-CT-scans-size-384-x-156-with-labels-and-a-mask"> </a>
+</h4>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Lets-look-at-an-image">Lets look at an image<a class="anchor-link" href="#Lets-look-at-an-image"> </a></h3>
+<h3 id="Lets-look-at-an-image">
+<a class="anchor" href="#Lets-look-at-an-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lets look at an image<a class="anchor-link" href="#Lets-look-at-an-image"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -206,9 +234,12 @@ The dataset has 3 categorical labels:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="And-the-corresponding-mask">And the corresponding mask<a class="anchor-link" href="#And-the-corresponding-mask"> </a></h3>
+<h3 id="And-the-corresponding-mask">
+<a class="anchor" href="#And-the-corresponding-mask" aria-hidden="true"><span class="octicon octicon-link"></span></a>And the corresponding mask<a class="anchor-link" href="#And-the-corresponding-mask"> </a>
+</h3>
 </div>
 </div>
 </div>
@@ -230,14 +261,16 @@ The dataset has 3 categorical labels:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Not sure what to do with the mask data at this point so we will ignore it for now when training our model.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Lets look at the distribution of our data labels to see if we are dealing with an unbalanced dataset.</strong></p>
 
@@ -253,9 +286,9 @@ The dataset has 3 categorical labels:</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
  <span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
- <span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;labels&#39;</span><span class="p">)</span>
- <span class="o">.</span><span class="n">set_axis</span><span class="p">([</span><span class="s1">&#39;count&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
- <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;cancer&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;benign&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">&#39;normal&#39;</span><span class="p">})</span>
+ <span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'labels'</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">set_axis</span><span class="p">([</span><span class="s1">'count'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">'cancer'</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s1">'benign'</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">'normal'</span><span class="p">})</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -266,16 +299,21 @@ The dataset has 3 categorical labels:</p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Perfectly balanced so no issue there.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="DataBlock">DataBlock<a class="anchor-link" href="#DataBlock"> </a></h3><p>We have not covered DataBlock in depth yet and all the examples involve reading image files from disk.
+<h3 id="DataBlock">
+<a class="anchor" href="#DataBlock" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataBlock<a class="anchor-link" href="#DataBlock"> </a>
+</h3>
+<p>We have not covered DataBlock in depth yet and all the examples involve reading image files from disk.
 The image data from the Breast CT scan dataset is in the form of a Numpy array.
 We can use the DataBlock by defining functions for get_items, get_x and get_y.</p>
 <p>Not the most elegant solution but at this stage it will get us to a model quickly.</p>
@@ -300,9 +338,9 @@ We can use the DataBlock by defining functions for get_items, get_x and get_y.</
 
 <span class="c1"># return mapped label</span>
 <span class="k">def</span> <span class="nf">get_y</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;cancer&quot;</span>
-    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;benign&quot;</span>
-    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="k">return</span> <span class="s2">&quot;normal&quot;</span>
+    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="s2">"cancer"</span>
+    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="s2">"benign"</span>
+    <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="k">return</span> <span class="s2">"normal"</span>
 
 <span class="c1">#  Build DataBlock and keep 20% of our data for validation set</span>
 <span class="n">dls</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span>
@@ -350,7 +388,7 @@ We can use the DataBlock by defining functions for get_items, get_x and get_y.</
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">&#39;model.pkl&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s1">'model.pkl'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -368,7 +406,7 @@ We can use the DataBlock by defining functions for get_items, get_x and get_y.</
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">interp</span> <span class="o">=</span> <span class="n">ClassificationInterpretation</span><span class="o">.</span><span class="n">from_learner</span><span class="p">(</span><span class="n">learn</span><span class="p">)</span>
-<span class="n">interp</span><span class="o">.</span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Purples&#39;</span><span class="p">)</span>
+<span class="n">interp</span><span class="o">.</span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Purples'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -378,7 +416,8 @@ We can use the DataBlock by defining functions for get_items, get_x and get_y.</
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this classification we are looking to optimize cancer recall.  Misclassifying cancer for benign or benign for cancer is not an issue as a biopsy would most likely be performed to see if cancer is actually present.
 So the bad outcome would be our model predicting a normal scan when it was actually cancer.</p>
@@ -394,7 +433,7 @@ So the bad outcome would be our model predicting a normal scan when it was actua
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;percent of instances where model predicted normal when cancer was present: </span><span class="si">{</span><span class="nb">round</span><span class="p">((</span><span class="mi">2</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dls</span><span class="o">.</span><span class="n">valid_ds</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'percent of instances where model predicted normal when cancer was present: </span><span class="si">{</span><span class="nb">round</span><span class="p">((</span><span class="mi">2</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dls</span><span class="o">.</span><span class="n">valid_ds</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">%'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -404,7 +443,8 @@ So the bad outcome would be our model predicting a normal scan when it was actua
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The model missed a cancer diagnosis in only 0.28% of the CT scans!  This is considering that the 78 times our model mislabelled cancer for benign it would have been caught with a biopsy.</p>
 
@@ -415,7 +455,15 @@ So the bad outcome would be our model predicting a normal scan when it was actua
 
 
 
-  </div><a class="u-url" href="/2022/05/04/fastai_breast_cancer_ct.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="sylvaint/aimusing"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/datasets/s3%20partners/eda/2022/05/04/fastai_breast_cancer_ct.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
