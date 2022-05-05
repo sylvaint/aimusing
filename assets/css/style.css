@@ -512,6 +512,6 @@ table td { background-color: #121212; border-color: #333333; color: rgba(255, 25
 
 canvas { filter: invert(100%); }
 
-img { background: white; }
+.output_png img { background: white; }
 
 /*# sourceMappingURL=style.css.map */
