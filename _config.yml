@@ -38,10 +38,11 @@ url: "https://sylvaint.dev" # the base hostname & protocol for your site, e.g. h
 baseurl: "" # the subpath of your site, e.g. "/blog".
 
 # Github and twitter are optional:
-#minima:
-#  social_links:
-#    twitter: greytrader
-#    github: sylvaint
+# removed social links causing build error
+minima:
+  social_links:
+    twitter: greytrader
+    github: sylvaint
 
 # Set this to true to get LaTeX math equation support
 use_math: 
