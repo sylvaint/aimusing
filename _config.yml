@@ -39,10 +39,10 @@ baseurl: "" # the subpath of your site, e.g. "/blog".
 
 # Github and twitter are optional:
 # removed social links causing build error
-minima:
-  social_links:
-    twitter: greytrader
-    github: sylvaint
+#minima:
+#  social_links:
+#    twitter: greytrader
+#    github: sylvaint
 
 # Set this to true to get LaTeX math equation support
 use_math: 
